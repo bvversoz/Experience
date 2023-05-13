@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Layout</title>
+    <style>
+        .head1 {
+            margin-left: 10px;
+            margin-top: 30px;
+            font-size: 32px;
+            color: #a4a2a2;
+            font-weight: bold;
+        }
+
+        .head2 {
+            font-size: 12px;
+            margin-left: 10px;
+            margin-bottom: 15px;
+        }
+        body {
+            margin: 0 auto;
+            background-position: center;
+            background-size: contain;
+        }
+        .menu {
+            font-size: 12px;
+            position: sticky;
+            top: 0;
+            background-color: #3f3f3f;
+            padding: 10px 0 10px 0;
+            color: white;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .menu a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .menu-log {
+            right: auto;
+            float: right;
+        }
+        footer {
+            width: 100%;
+            bottom: 10px;
+            background-color: #000;
+            color: #fff;
+            position: absolute;
+            padding-top: 5px;
+            padding-bottom: 15px;
+            text-align: end;
+            font-size: 12px;
+            font-weight: normal;
+        }
+        .body_sec {
+            margin-top: 100px;
+            margin-left: 40px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 20px;
+            justify-content: center; /* Center grid items horizontally */
+            align-items: center; /* Center grid items vertically */
+        }
+        .grid img {
+            width: 200px;
+            height: 80px;
+            object-fit: fill;
+            border-radius: 25px;
+            box-shadow: .8px 2px rgba(0,0,0,01);
+            background-color: #f2f2f2; /* Add light gray background color */
+        }
+    </style>
+</head>
+<body>
+<!-- Menu Navigation Bar -->
+<nav class="menu">
+    <a href="#home">ABOUT ME</a>
+    <a href="#news">NEWS</a>
+    <a href="#about">NOTIFICATIONS</a>
+    <div class="menu-log">
+        <a href="#Github">GITHUB</a>
+    </div>
+</nav>
+<!-- Header Section -->
+<header>
+    <div class="head1">
+        Ben Versoza
+    </div>
+    <div class="head2">
+        A self-hosted raspberry pi personal website
+    </div>
+</header>
+<!DOCTYPE html>
+<!-- Body section -->
+<main class="body_sec">
+    <section id="Content">
+        <h3>Code</h3>
+        <div class="container">
+            <div class="grid">
+                <div>
+                    <img src="https://via.placeholder.com/200x200?text=Image+1" alt="Material Manager">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, nisl eu commodo vulputate, orci sapien pellentesque mi, non aliquam eros nisi et libero. Aliquam consectetur, magna vitae faucibus posuere, turpis turpis aliquam ante, sit amet laoreet velit velit eu nisi.</p>
+                </div>
+                <div>
+                    <img src="image2.jpg" alt="Flutter Widgets">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, nisl eu commodo vulputate, orci sapien pellentesque mi, non aliquam eros nisi et libero. Aliquam consectetur, magna vitae faucibus posuere, turpis turpis aliquam ante, sit amet laoreet velit velit eu nisi.</p>
+                </div>
+                <div>
+                    <img src="image3.jpg" alt="Flutter 3D Display">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique, nisl eu commodo vulputate, orci sapien pellentesque mi, non aliquam eros nisi et libero. Aliquam consectetur, magna vitae faucibus posuere, turpis turpis aliquam ante, sit amet laoreet velit velit eu nisi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <p class="footer__text">&copy; 2023 My Developer Page</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
