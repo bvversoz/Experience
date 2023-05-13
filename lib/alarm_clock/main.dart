@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:gsheets/alarm_clock/text_style_class.dart';
+import 'package:gsheets/alarm_clock/toggle_alarm_button.dart';
 
+import 'appbar.dart';
+import 'clock_body.dart';
 import 'count_down.dart';
 
 void main() => runApp(AlarmClockApp());
@@ -64,11 +66,12 @@ class _AlarmClockScreenState extends State<AlarmClockScreen> {
     }
   }
 
-  bool _isAlarmTime() {
+  bool _AlarmTime() {
     final now = TimeOfDay.now();
     return now == _selectedTime;
   }
 
+ // This code calculates the time remaining until a selected alarm time by subtracting the current time from the selected time.
   Duration _getTimeUntilAlarm() {
     final now = DateTime.now();
     final alarmDateTime = DateTime(
@@ -83,30 +86,21 @@ class _AlarmClockScreenState extends State<AlarmClockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTime = TimeOfDay.now();
     final alarmTime = TimeOfDay(hour: _selectedTime.hour, minute: _selectedTime.minute);
-    final isAlarmTime = _isAlarmTime();
+    final isAlarmTime = currentTime == alarmTime;
     final timeUntilAlarm = _getTimeUntilAlarm();
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          'Alarm Clock',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-      ),
+    String formattedTimeUntilAlarm = '${timeUntilAlarm.inHours}:${timeUntilAlarm.inMinutes.remainder(60).toString().padLeft(2, '0')}:${timeUntilAlarm.inSeconds.remainder(60).toString().padLeft(2, '0')}';
 
+    return Scaffold(
+      appBar: AlarmAppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Current Time: ${TimeOfDay.now().format(context)}'),
+            Text('Current Time: ${currentTime.format(context)}'),
             SizedBox(height: 20),
             if (_isTimerSet)
               Column(
@@ -117,37 +111,29 @@ class _AlarmClockScreenState extends State<AlarmClockScreen> {
               ),
             Text('Alarm Status: ${_isAlarmOn ? 'On' : 'Off'}'),
             SizedBox(height: 20),
-            if (isAlarmTime)
-              Text(
-                'Wake up!',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              ),
-            if (_isTimerSet && !isAlarmTime && timeUntilAlarm.inSeconds > 0)
+
+            AlarmButton(
+              isAlarmOn: _isAlarmOn,
+              onPressed: _toggleAlarm,
+            ),
+            SizedBox(height: 20),
+            SetAlarmButton(
+              onAlarmSet: (selectedTime) {
+                setState(() {
+                  _selectedTime = selectedTime;
+                  _isTimerSet = true; // Set the timer status to true when a time is selected
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            if (_isAlarmOn && !isAlarmTime)
               CountdownWidget(
                 duration: timeUntilAlarm,
               ),
             SizedBox(height: 20),
-            ElevatedButton(
-              child: Text(_isAlarmOn ? 'Turn off Alarm' : 'Turn on Alarm'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black, // Set the background color to black
-              ),
-              onPressed: _toggleAlarm,
-            ),
-            SizedBox(height: 20),
-            TextButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black, // Set the background color to black
-              ),
-              child: Text('Set Alarm Time', style: TextStyle(color: Colors.yellowAccent),),
-              onPressed: () => _selectTime(context),
-            ),
           ],
         ),
       ),
-
     );
   }
-
 }
-

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class CountdownWidget extends StatefulWidget {
   final Duration duration;
+  final bool hideButton;
 
-  const CountdownWidget({required this.duration});
+  const CountdownWidget({
+    required this.duration,
+    this.hideButton = false,
+  });
 
   @override
   _CountdownWidgetState createState() => _CountdownWidgetState();
@@ -13,6 +17,7 @@ class CountdownWidget extends StatefulWidget {
 class _CountdownWidgetState extends State<CountdownWidget> {
   late Timer _timer;
   late Duration _remainingTime;
+  bool _isTimeHidden = false;
 
   @override
   void initState() {
@@ -41,6 +46,12 @@ class _CountdownWidgetState extends State<CountdownWidget> {
     return '$hours:$minutes:$seconds';
   }
 
+  void _toggleTimeVisibility() {
+    setState(() {
+      _isTimeHidden = !_isTimeHidden;
+    });
+  }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -51,10 +62,16 @@ class _CountdownWidgetState extends State<CountdownWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Time until alarm: ${_formatDuration(_remainingTime)}',
-          style: TextStyle(fontSize: 24, color: Colors.redAccent),
-        ),
+        if (!_isTimeHidden)
+          Text(
+            'Time until alarm: ${_formatDuration(_remainingTime)}',
+            style: TextStyle(fontSize: 14, color: Colors.redAccent),
+          ),
+        if (!_isTimeHidden && !widget.hideButton)
+          ElevatedButton(
+            child: Text('Hide'),
+            onPressed: _toggleTimeVisibility,
+          ),
       ],
     );
   }

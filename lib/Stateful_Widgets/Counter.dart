@@ -8,11 +8,11 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  int _counter = 0;
+  int _count = 0;
 
-  void _incrementCounter() {
+  void _incrementCount() {
     setState(() {
-      _counter++;
+      _count++;
     });
   }
 
@@ -22,13 +22,17 @@ class _CounterWidgetState extends State<CounterWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Counter value: $_counter',
+          'Count:',
           style: TextStyle(fontSize: 20),
+        ),
+        Text(
+          '$_count',
+          style: TextStyle(fontSize: 40),
         ),
         SizedBox(height: 20),
         ElevatedButton(
-          child: Text('Increment Counter'),
-          onPressed: _incrementCounter,
+          onPressed: _incrementCount,
+          child: Text('Increment'),
         ),
       ],
     );
