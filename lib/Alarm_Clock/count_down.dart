@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:gsheets/alarm_clock/text_style_class.dart';
 
 class CountdownWidget extends StatefulWidget {
   final Duration duration;
@@ -33,6 +34,9 @@ class _CountdownWidgetState extends State<CountdownWidget> {
           _remainingTime = _remainingTime - Duration(seconds: 1);
         } else {
           timer.cancel();
+          if (_isAlarmTimeReached()) {
+            _showAlertDialog('Wake Up!');
+          }
         }
       });
     });
@@ -44,6 +48,32 @@ class _CountdownWidgetState extends State<CountdownWidget> {
     String minutes = twoDigits(duration.inMinutes.remainder(60));
     String seconds = twoDigits(duration.inSeconds.remainder(60));
     return '$hours:$minutes:$seconds';
+  }
+
+  bool _isAlarmTimeReached() {
+    final now = DateTime.now();
+    final alarmTime = now.subtract(Duration(seconds: _remainingTime.inSeconds));
+    final currentTime = TimeOfDay.fromDateTime(now);
+    return alarmTime.hour == currentTime.hour && alarmTime.minute == currentTime.minute;
+  }
+
+  void _showAlertDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(message),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _toggleTimeVisibility() {
@@ -64,12 +94,18 @@ class _CountdownWidgetState extends State<CountdownWidget> {
       children: [
         if (!_isTimeHidden)
           Text(
-            'Time until alarm: ${_formatDuration(_remainingTime)}',
+            '${_formatDuration(_remainingTime)}',
             style: TextStyle(fontSize: 14, color: Colors.redAccent),
           ),
         if (!_isTimeHidden && !widget.hideButton)
           ElevatedButton(
-            child: Text('Hide'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white, // Set the button background color to black
+            ),
+            child: Text(
+              'Hide',
+              style: LowProfileTextStyle().dark,
+            ),
             onPressed: _toggleTimeVisibility,
           ),
       ],

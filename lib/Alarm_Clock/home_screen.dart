@@ -1,23 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:gsheets/alarm_clock/text_style_class.dart';
 import 'package:gsheets/alarm_clock/toggle_alarm_button.dart';
 
+import 'analog_clock.dart';
 import 'appbar.dart';
 import 'clock_body.dart';
 import 'count_down.dart';
-
-void main() => runApp(AlarmClockApp());
-
-class AlarmClockApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Alarm Clock',
-      home: AlarmClockScreen(),
-    );
-  }
-}
 
 class AlarmClockScreen extends StatefulWidget {
   @override
@@ -66,12 +55,7 @@ class _AlarmClockScreenState extends State<AlarmClockScreen> {
     }
   }
 
-  bool _AlarmTime() {
-    final now = TimeOfDay.now();
-    return now == _selectedTime;
-  }
-
- // This code calculates the time remaining until a selected alarm time by subtracting the current time from the selected time.
+  // This code calculates the time remaining until a selected alarm time by subtracting the current time from the selected time.
   Duration _getTimeUntilAlarm() {
     final now = DateTime.now();
     final alarmDateTime = DateTime(
@@ -91,47 +75,45 @@ class _AlarmClockScreenState extends State<AlarmClockScreen> {
     final isAlarmTime = currentTime == alarmTime;
     final timeUntilAlarm = _getTimeUntilAlarm();
 
-    String formattedTimeUntilAlarm = '${timeUntilAlarm.inHours}:${timeUntilAlarm.inMinutes.remainder(60).toString().padLeft(2, '0')}:${timeUntilAlarm.inSeconds.remainder(60).toString().padLeft(2, '0')}';
-
     return Scaffold(
-      appBar: AlarmAppBar(),
+      appBar: AppBar(
+        leading: Text('${_isAlarmOn ? 'On' : 'Off'}'),
+        title: SetAlarmButton(
+          onAlarmSet: (selectedTime) {
+            setState(() {
+              _selectedTime = selectedTime;
+              _isTimerSet = true; // Set the timer status to true when a time is selected
+            });
+          },
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Current Time: ${currentTime.format(context)}'),
-            SizedBox(height: 20),
-            if (_isTimerSet)
-              Column(
-                children: [
-                  Text('Alarm Time: ${alarmTime.format(context)}'),
-                  SizedBox(height: 20),
-                ],
-              ),
-            Text('Alarm Status: ${_isAlarmOn ? 'On' : 'Off'}'),
-            SizedBox(height: 20),
-
-            AlarmButton(
-              isAlarmOn: _isAlarmOn,
-              onPressed: _toggleAlarm,
+        child: SizedBox(
+          width: 450,
+          height: 400,
+          child: ListTile(
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AnalogClockWidget2(),
+                SizedBox(height: 10),
+                if (_isTimerSet) Text('Alarm Time: ${alarmTime.format(context)}'),
+                AlarmButton(
+                  isAlarmOn: _isAlarmOn,
+                  onPressed: _toggleAlarm,
+                ),
+                SizedBox(height: 20),
+                if (_isAlarmOn && !isAlarmTime)
+                  CountdownWidget(
+                    duration: timeUntilAlarm,
+                  ),
+                SizedBox(height: 20),
+              ],
             ),
-            SizedBox(height: 20),
-            SetAlarmButton(
-              onAlarmSet: (selectedTime) {
-                setState(() {
-                  _selectedTime = selectedTime;
-                  _isTimerSet = true; // Set the timer status to true when a time is selected
-                });
-              },
-            ),
-            SizedBox(height: 20),
-            if (_isAlarmOn && !isAlarmTime)
-              CountdownWidget(
-                duration: timeUntilAlarm,
-              ),
-            SizedBox(height: 20),
-          ],
+            // subtitle: ,
+          ),
         ),
       ),
     );

@@ -36,6 +36,9 @@ class _SetAlarmButtonState extends State<SetAlarmButton> {
     return ElevatedButton(
       child: Text('Set Alarm'),
       onPressed: () => _selectTime(context),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.deepOrange, // Set the button background color to black
+      ),
     );
   }
 }

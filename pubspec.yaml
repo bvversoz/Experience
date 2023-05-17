@@ -19,6 +19,8 @@ dependencies:
   babylonjs_viewer: ^1.2.1
   model_viewer: ^0.0.0
   fluttertoast: ^8.2.1
+  fluentui_system_icons: ^1.1.200
+  analog_clock: ^0.1.0
 
 dev_dependencies:
   pedantic: ^1.11.1

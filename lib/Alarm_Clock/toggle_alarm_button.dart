@@ -17,7 +17,7 @@ class AlarmButton extends StatelessWidget {
       child: Text(isAlarmOn ? 'Turn off Alarm' : 'Turn on Alarm'),
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.black, // Set the button background color to black
+        backgroundColor: Colors.black, // Set the button background color to black
       ),
     );
   }

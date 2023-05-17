@@ -15,6 +15,7 @@ class LowProfileTextStyle {
    TextStyle button = TextStyle(
     fontSize: 16,
     color: Colors.white,
+     fontWeight: FontWeight.bold,
   );
 
    TextStyle wakeup = TextStyle(
@@ -22,4 +23,15 @@ class LowProfileTextStyle {
     fontWeight: FontWeight.bold,
     color: Colors.red,
   );
+   TextStyle dark = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w200,
+    color: Colors.black,
+  );
+
+   TextStyle snooze = TextStyle(
+     fontSize: 14,
+     fontWeight: FontWeight.bold,
+     color: Colors.grey,
+   );
 }
