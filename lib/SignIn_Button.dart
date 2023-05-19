@@ -15,6 +15,9 @@ class SignInButton extends StatelessWidget {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+      ),
       onPressed: () {
         if (email.isEmpty || password.isEmpty) {
           Fluttertoast.showToast(
@@ -58,7 +61,6 @@ class SignInButton extends StatelessWidget {
           );
         }
       },
-
       child: Text(
         'Sign In',
         style: TextStyle(

@@ -5,13 +5,8 @@ import 'SignIn_Button.dart';
 import 'TextField_Email.dart';
 
 class SignInForm extends StatelessWidget {
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-
-  const SignInForm({
-    required this.emailController,
-    required this.passwordController,
-  });
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +15,20 @@ class SignInForm extends StatelessWidget {
       child: Card(
         color: Colors.black26,
         elevation: 4,
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Sign In',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomTextField(
@@ -45,7 +50,13 @@ class SignInForm extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            SignInButton(email: emailController.value.text, password: passwordController.value.text,),
+            Container(
+              color: Colors.black,
+              child: SignInButton(
+                email: emailController.text,
+                password: passwordController.text,
+              ),
+            ),
           ],
         ),
       ),

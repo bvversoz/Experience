@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
         // ),
         body: Center(
           child: SignInForm(
-            emailController: _emailController,
-            passwordController: _passwordController,
           ),
         ),
       ),
